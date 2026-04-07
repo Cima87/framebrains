@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Simon Köcher | An Application</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=Space+Grotesk:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#131313",
+                    "surface-dim": "#131313",
+                    "on-primary-fixed": "#261900",
+                    "on-background": "#e5e2e1",
+                    "on-primary": "#412d00",
+                    "secondary-fixed-dim": "#e6c27c",
+                    "on-primary-fixed-variant": "#5d4200",
+                    "inverse-on-surface": "#313030",
+                    "background": "#131313",
+                    "tertiary-container": "#00dafe",
+                    "outline": "#9d8f78",
+                    "tertiary-fixed": "#acedff",
+                    "on-secondary-fixed": "#261900",
+                    "on-secondary-fixed-variant": "#5c4307",
+                    "surface-tint": "#febb00",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-container": "#6c4e00",
+                    "on-tertiary-container": "#005b6c",
+                    "primary": "#ffdfa7",
+                    "on-secondary-container": "#d4b06c",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container-highest": "#353534",
+                    "secondary": "#e6c27c",
+                    "primary-container": "#ffbc00",
+                    "outline-variant": "#504532",
+                    "error": "#ffb4ab",
+                    "surface-container": "#201f1f",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-tertiary": "#003640",
+                    "primary-fixed-dim": "#febb00",
+                    "inverse-primary": "#7a5900",
+                    "surface-variant": "#353534",
+                    "on-secondary": "#412d00",
+                    "surface-bright": "#3a3939",
+                    "on-surface-variant": "#d4c4ab",
+                    "secondary-container": "#5c4307",
+                    "on-surface": "#e5e2e1",
+                    "on-tertiary-fixed": "#001f26",
+                    "primary-fixed": "#ffdea3",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#00d9fd",
+                    "surface-container-high": "#2a2a2a",
+                    "on-tertiary-fixed-variant": "#004e5c",
+                    "on-error": "#690005",
+                    "tertiary": "#afedff",
+                    "inverse-surface": "#e5e2e1",
+                    "secondary-fixed": "#ffdea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0e0e0e; }
+        ::-webkit-scrollbar-thumb { background: #ffbc00; }
+        body { scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth; }
+        section { scroll-snap-align: start; }
+        .glass-card { backdrop-filter: blur(24px); background: rgba(53, 53, 52, 0.4); }
+        .diagonal-menu { display: none; }
+        .menu-open .diagonal-menu { display: flex; }
+        
+        /* Modal Styles */
+        #calendar-modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #calendar-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-950/40 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50 flex items-center px-8 h-20">
+<div class="flex-none">
+<button class="text-[#ffbc00] p-2 hover:bg-white/5 transition-all duration-500 cursor-pointer active:scale-95 ease-in-out" onclick="document.body.classList.toggle('menu-open')">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="grow text-center text-xl font-bold tracking-tighter text-[#ffbc00] font-['Space_Grotesk'] cursor-pointer active:scale-95 ease-in-out">
+        Simon Köcher - An Application
+    </div>
+<div class="flex-none w-10"></div> <!-- Placeholder for centering balance -->
+</nav>
+<!-- Dropdown Menu -->
+<div class="diagonal-menu fixed inset-0 z-[60] bg-surface/95 backdrop-blur-2xl flex-col items-center justify-center gap-8">
+<button class="absolute top-8 left-8 text-primary" onclick="document.body.classList.remove('menu-open')">
+<span class="material-symbols-outlined text-4xl">close</span>
+</button>
+<a class="font-headline text-4xl md:text-6xl font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-tighter" href="#vision" onclick="document.body.classList.remove('menu-open')">Reel</a>
+<a class="font-headline text-4xl md:text-6xl font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-tighter" href="#contact" onclick="document.body.classList.remove('menu-open')">Contact</a>
+</div>
+<!-- SECTION 1: LANDING HERO -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-surface-container-lowest">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-surface-container-lowest/80 z-10"></div>
+<img class="w-full h-full object-cover opacity-60" data-alt="Cinematic wide shot of a dark high-tech research facility with glowing amber monitors and soft atmospheric haze in the air" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzvzeukfWt5v0X6FiCFjApNjZYXpaNuRUorqIFVJjKusz2sIbdirZSQf8dJ78zNchrKKMFbA6K3xx-RHQA-rzUasl4Q6Rz1XFWvq2JT01Xvklfyr5VDJlOlKgWtEPM2-GjKKI5DCOglNzIb0UwV-ca9u86GQwlZxaNqa5zq3pqPYS5kYocYxPQ88v5EV6_7O3st9kwOGt8tYMmmQTUbWvsicMOrXHCLvrJ0Mzp2nyvUHEH2KhfIHjEbJ-MRTfc4c9ht-Aj7qm7JCU"/>
+</div>
+<div class="relative z-20 text-center flex flex-col items-center">
+<div class="mt-12">
+<button class="group relative px-12 py-4 flex flex-col items-center gap-2">
+<span class="font-label text-primary text-xs tracking-widest uppercase transition-all group-hover:tracking-[0.6em]">Press to Enter</span>
+<div class="w-12 h-[1px] bg-primary-container transition-all group-hover:w-32"></div>
+</button>
+</div>
+</div>
+<div class="absolute bottom-10 left-10 flex flex-col gap-1">
+<p class="font-label text-[8px] text-outline-variant uppercase">Lat: 34.0522 N</p>
+<p class="font-label text-[8px] text-outline-variant uppercase">Long: 118.2437 W</p>
+</div>
+</section>
+<!-- SECTION 2: VISION PAGE (VIDEO) -->
+<section class="relative h-screen w-full flex flex-col md:flex-row bg-surface overflow-hidden" id="vision">
+<div class="w-full md:w-1/2 h-1/2 md:h-full bg-surface-container-lowest relative group">
+<img class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000" data-alt="Close-up of a high-end cinema camera lens reflecting golden sunset light in a dark studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2xjMTuDpD5QrQqIaOnrtzW9NiRMeXE6UHCIIFjQVA-BjOv5GFEqSoQqLVCm7vVfxxn8_P2D6BEEPn7jgIF3aJdyKYdTogxrsSwz0fUbsw632hF6d-eRu2dGufP5yw9HXPTvIrj0rvtJc96-1op1ruN4K2uv0jQXPm262n7SVhsBscxYkx6JOObxYQN4KZ2O0zbF-ZnXMPCNNfhztw7lKPm7u0zq-lwxuGPS5E8QErazqjarQVlbPPEn3hih2RNU7gMs9P3y5Yeps"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="w-20 h-20 rounded-full border border-primary-container/30 flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-all duration-500">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center px-12 md:px-24 bg-surface">
+<div class="border-l-4 border-primary-container pl-8 py-4">
+<h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6 leading-tight">
+                my application <span class="text-primary-container">video</span>
+</h2>
+</div>
+</div>
+</section>
+<!-- SECTION 3: CONTACT -->
+<section class="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-surface" id="contact">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-black/90 z-10"></div>
+<img class="w-full h-full object-cover opacity-20" data-alt="Futuristic glowing terminal interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1__io07KvyDOb7xGlSvCYU9tiC6dDrDLpA9OH-0ugw6r0AgdYCM3OVxJ-FrnAaPKUQizhPJf2UNse2AyjH2c4iq9zRu5QUtGvqdJsf6jbe4x3jI8URIr27CrB_7WzJZbVC2FkrlEbRRqoySwIx5BXy8i57YbzRA5lpV82Mr_KwqEy0Slj_g3l5RFGwC5_LIad0Q3PfOmuTtwOfEaU0SUW6hxMBv8UwKpXn5Xs5ckd6cTTbsw_DapSDiBiChuaW4im-PQYTfvPJCE"/>
+</div>
+<div class="relative z-20 w-full max-w-4xl px-8 text-center flex flex-col items-center">
+<h2 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter text-on-surface mb-8">GET IN <span class="text-primary-container italic">TOUCH</span></h2>
+<div class="flex flex-col items-center gap-4 mb-12">
+<a class="font-headline text-2xl md:text-4xl text-primary hover:text-primary-container transition-colors tracking-tight" href="mailto:hello@simonkoecher.com">hello@simonkoecher.com</a>
+<p class="font-headline text-xl md:text-2xl text-on-surface-variant tracking-tight">+46 70 921 4543</p>
+</div>
+<button class="group relative px-10 py-5 border border-primary/30 hover:border-primary-container transition-all duration-300" onclick="document.getElementById('calendar-modal').classList.add('active')">
+<span class="relative z-10 font-label text-primary-container tracking-[0.4em] text-sm uppercase">Book a Meeting</span>
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
+</button>
+</div>
+<!-- Booking Modal -->
+<div class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md" id="calendar-modal">
+<div class="relative bg-surface-container-low border border-outline-variant w-full max-w-2xl overflow-hidden rounded-xl shadow-2xl">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container">
+<h3 class="font-headline text-xl font-bold text-primary uppercase tracking-widest">Select Availability</h3>
+<button class="text-on-surface-variant hover:text-primary" onclick="document.getElementById('calendar-modal').classList.remove('active')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6">
+<!-- Simple Calendar Grid View -->
+<div class="grid grid-cols-7 gap-2 text-center mb-4">
+<div class="font-label text-[10px] text-outline uppercase">Mon</div>
+<div class="font-label text-[10px] text-outline uppercase">Tue</div>
+<div class="font-label text-[10px] text-outline uppercase">Wed</div>
+<div class="font-label text-[10px] text-outline uppercase">Thu</div>
+<div class="font-label text-[10px] text-outline uppercase">Fri</div>
+<div class="font-label text-[10px] text-outline-variant uppercase">Sat</div>
+<div class="font-label text-[10px] text-outline-variant uppercase">Sun</div>
+<!-- Week Row -->
+<button class="aspect-square flex items-center justify-center border border-outline-variant/30 text-xs hover:bg-primary/10 transition-colors">12</button>
+<button class="aspect-square flex items-center justify-center border border-outline-variant/30 text-xs hover:bg-primary/10 transition-colors">13</button>
+<button class="aspect-square flex items-center justify-center border border-primary/50 bg-primary/5 text-xs text-primary font-bold">14</button>
+<button class="aspect-square flex items-center justify-center border border-outline-variant/30 text-xs hover:bg-primary/10 transition-colors">15</button>
+<button class="aspect-square flex items-center justify-center border border-outline-variant/30 text-xs hover:bg-primary/10 transition-colors">16</button>
+<div class="aspect-square flex items-center justify-center text-xs text-outline-variant">17</div>
+<div class="aspect-square flex items-center justify-center text-xs text-outline-variant">18</div>
+</div>
+<div class="space-y-3">
+<p class="font-label text-[10px] text-outline uppercase tracking-widest">Available Slots (CET)</p>
+<div class="grid grid-cols-3 gap-2">
+<button class="py-2 border border-outline-variant text-xs hover:bg-primary hover:text-on-primary transition-all">09:00</button>
+<button class="py-2 border border-outline-variant text-xs hover:bg-primary hover:text-on-primary transition-all">13:30</button>
+<button class="py-2 border border-outline-variant text-xs hover:bg-primary hover:text-on-primary transition-all">16:00</button>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-highest/50 flex justify-end">
+<button class="px-6 py-2 bg-primary-container text-on-primary-container font-label text-[10px] uppercase tracking-widest font-bold">Initialize Link</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Shell -->
+<footer class="bg-[#0e0e0e] w-full py-12 px-8">
+<div class="flex flex-col md:flex-row justify-between items-center w-full max-w-7xl mx-auto gap-4">
+<div class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-neutral-500">
+            © 2024 SIMON KÖCHER. ACCESS GRANTED.
+        </div>
+<div class="flex gap-12">
+<a class="text-neutral-600 hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-['Space_Grotesk'] text-[10px] uppercase tracking-widest" href="#">TERMINAL</a>
+<a class="text-neutral-600 hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-['Space_Grotesk'] text-[10px] uppercase tracking-widest" href="#">SECURITY</a>
+<a class="text-[#ffbc00] hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-['Space_Grotesk'] text-[10px] uppercase tracking-widest" href="#">LOGOUT</a>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center hover:bg-primary/10 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[14px] text-neutral-500">public</span>
+</div>
+<div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center hover:bg-primary/10 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[14px] text-neutral-500">terminal</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    // Simple modal close on click outside
+    window.onclick = function(event) {
+        let modal = document.getElementById('calendar-modal');
+        if (event.target == modal) {
+            modal.classList.remove('active');
+        }
+    }
+</script>
+</body></html>
