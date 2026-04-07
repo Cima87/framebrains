@@ -129,6 +129,7 @@
         /* Expanding Video Accordion Styles */
         .accordion-slice {
             transition: width 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: none;
         }
         .accordion-slice:hover {
             width: 70%;
@@ -144,6 +145,40 @@
             writing-mode: vertical-rl;
             text-orientation: mixed;
             transform: rotate(180deg);
+        }
+
+        /* Custom Play Cursor */
+        #play-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            width: 80px;
+            height: 80px;
+            background: #ffbc00;
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .accordion-slice:hover ~ #play-cursor,
+        #other-works:hover #play-cursor {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #video-modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        #video-modal.active {
+            display: flex;
+            opacity: 1;
         }
     </style>
 <script src="https://player.vimeo.com/api/player.js"></script>
@@ -212,25 +247,28 @@
 </div>
 </section>
 <!-- SECTION 3: OTHER WORKS (EXPANDING ACCORDION) -->
-<section class="relative h-screen w-full bg-black overflow-hidden" id="other-works">
-<!-- New Section Headline -->
-<div class="absolute top-24 left-1/2 -translate-x-1/2 z-40 pointer-events-none">
-<h2 class="font-headline font-bold text-3xl md:text-5xl text-white tracking-[0.3em] uppercase opacity-80 cinematic-glow">Other Works</h2>
+<section class="relative h-screen w-full bg-black overflow-hidden" id="other-works" onmousemove="updateCursor(event)">
+<!-- Updated Section Headline -->
+<div class="absolute top-24 left-12 z-40 pointer-events-none">
+<h2 class="font-headline font-bold text-3xl md:text-5xl tracking-[0.1em] uppercase opacity-90 cinematic-glow">
+<span class="text-white">Other</span> <span class="text-[#ffbc00]">Works</span>
+</h2>
 </div>
+<!-- Custom Play Cursor -->
+<div id="play-cursor">PLAY</div>
 <div class="flex w-full h-full">
 <!-- Slice 1: ODDSET - JINX -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5">
+<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5" onclick="openVideoModal('1113549824')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
-<div style="padding:56.25% 0 0 0;position:relative;height:100%;"><iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/1113549824?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="250701_Oddset_TheJinks_Film2_Kosovo.mp4"></iframe></div>
+<div style="padding:56.25% 0 0 0;position:relative;height:100%;">
+<iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/1113549824?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="250701_Oddset_TheJinks_Film2_Kosovo.mp4"></iframe>
+</div>
 </div>
 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
 <!-- Expanded Content -->
 <div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
 <h3 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">ODDSET - JINX</h3>
 <p class="max-w-md text-sm md:text-base text-on-surface-variant font-body mb-8 leading-relaxed">A high-energy sports production.</p>
-<a class="w-fit px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-headline text-xs uppercase tracking-[0.2em] hover:bg-white/20 transition-all flex items-center gap-3" href="https://vimeo.com/1113549824" target="_blank">
-                    Watch Film <span class="material-symbols-outlined text-sm">north_east</span>
-</a>
 </div>
 <!-- Vertical Title (Collapsed State) -->
 <div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
@@ -238,55 +276,61 @@
 </div>
 </div>
 <!-- Slice 2: UL - Film critic -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5">
+<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5" onclick="openVideoModal('875093743')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
-<div style="padding:56.25% 0 0 0;position:relative;height:100%;"><iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/875093743?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="UL - FILM CRITIC"></iframe></div>
+<div style="padding:56.25% 0 0 0;position:relative;height:100%;">
+<iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/875093743?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="UL - FILM CRITIC"></iframe>
+</div>
 </div>
 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
 <div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
 <h3 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">UL - Film critic</h3>
 <p class="max-w-md text-sm md:text-base text-on-surface-variant font-body mb-8 leading-relaxed">An insightful look into cinema.</p>
-<a class="w-fit px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-headline text-xs uppercase tracking-[0.2em] hover:bg-white/20 transition-all flex items-center gap-3" href="https://vimeo.com/875093743" target="_blank">
-                    Watch Film <span class="material-symbols-outlined text-sm">north_east</span>
-</a>
 </div>
 <div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
 <span class="vertical-text font-headline text-2xl md:text-4xl font-bold uppercase tracking-widest text-white/40">UL - Film critic</span>
 </div>
 </div>
 <!-- Slice 3: How I Became a Communist -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5">
+<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5" onclick="openVideoModal('1133765348')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
-<div style="padding:75% 0 0 0;position:relative;height:100%;"><iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/1133765348?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="How I Became a Communist_small"></iframe></div>
+<div style="padding:75% 0 0 0;position:relative;height:100%;">
+<iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/1133765348?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="How I Became a Communist_small"></iframe>
+</div>
 </div>
 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
 <div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
 <h3 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">How I Became a Communist</h3>
 <p class="max-w-md text-sm md:text-base text-on-surface-variant font-body mb-8 leading-relaxed">A compelling narrative short.</p>
-<a class="w-fit px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-headline text-xs uppercase tracking-[0.2em] hover:bg-white/20 transition-all flex items-center gap-3" href="https://vimeo.com/1133765348" target="_blank">
-                    Watch Film <span class="material-symbols-outlined text-sm">north_east</span>
-</a>
 </div>
 <div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
 <span class="vertical-text font-headline text-2xl md:text-4xl font-bold uppercase tracking-widest text-white/40">How I Became a Communist</span>
 </div>
 </div>
 <!-- Slice 4: Ericsson - Vision -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group">
+<div class="accordion-slice relative w-1/4 h-full overflow-hidden group" onclick="openVideoModal('576940667')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
-<div style="padding:28.13% 0 0 0;position:relative;height:100%;"><iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/576940667?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="ERICSSON - VISION"></iframe></div>
+<div style="padding:28.13% 0 0 0;position:relative;height:100%;">
+<iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" src="https://player.vimeo.com/video/576940667?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="ERICSSON - VISION"></iframe>
+</div>
 </div>
 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
 <div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
 <h3 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">Ericsson - Vision</h3>
 <p class="max-w-md text-sm md:text-base text-on-surface-variant font-body mb-8 leading-relaxed">Future-facing corporate storytelling.</p>
-<a class="w-fit px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-headline text-xs uppercase tracking-[0.2em] hover:bg-white/20 transition-all flex items-center gap-3" href="https://vimeo.com/576940667" target="_blank">
-                    Watch Film <span class="material-symbols-outlined text-sm">north_east</span>
-</a>
 </div>
 <div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
 <span class="vertical-text font-headline text-2xl md:text-4xl font-bold uppercase tracking-widest text-white/40">Ericsson - Vision</span>
 </div>
+</div>
+</div>
+<!-- Video Modal for Works -->
+<div class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 backdrop-blur-xl" id="video-modal">
+<div class="relative w-[90vw] h-[90vh] bg-black shadow-2xl flex items-center justify-center">
+<button class="absolute -top-12 right-0 text-white hover:text-[#ffbc00] transition-colors flex items-center gap-2 font-headline uppercase tracking-widest text-xs" onclick="closeVideoModal()">
+                    Close <span class="material-symbols-outlined text-2xl">close</span>
+</button>
+<div class="w-full h-full" id="modal-player-container"></div>
 </div>
 </div>
 </section>
@@ -391,7 +435,8 @@
 </div>
 </footer>
 <script>
-        let player;
+        let mainPlayer;
+        let modalPlayer;
         const vimeoId = '721227434';
 
         function enterExperience() {
@@ -405,9 +450,9 @@
             replayOverlay.classList.add('hidden');
 
             const iframe = document.getElementById('vimeo-player');
-            player = new Vimeo.Player(iframe);
+            mainPlayer = new Vimeo.Player(iframe);
 
-            player.on('ended', function() {
+            mainPlayer.on('ended', function() {
                 replayOverlay.classList.remove('hidden');
                 replayOverlay.classList.add('flex');
             });
@@ -418,17 +463,62 @@
             replayOverlay.classList.add('hidden');
             replayOverlay.classList.remove('flex');
             
-            if (player) {
-                player.setCurrentTime(0);
-                player.play();
+            if (mainPlayer) {
+                mainPlayer.setCurrentTime(0);
+                mainPlayer.play();
+            }
+        }
+
+        // Custom Cursor Logic
+        function updateCursor(e) {
+            const cursor = document.getElementById('play-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        }
+
+        // Video Modal Logic
+        function openVideoModal(id) {
+            const modal = document.getElementById('video-modal');
+            const container = document.getElementById('modal-player-container');
+            
+            container.innerHTML = `<iframe src="https://player.vimeo.com/video/${id}?autoplay=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+            
+            modal.classList.add('active');
+            modal.style.display = 'flex';
+            
+            const iframe = container.querySelector('iframe');
+            modalPlayer = new Vimeo.Player(iframe);
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const container = document.getElementById('modal-player-container');
+            
+            if (modalPlayer) {
+                modalPlayer.pause().then(() => {
+                    modal.classList.remove('active');
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        container.innerHTML = '';
+                    }, 400);
+                });
+            } else {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                container.innerHTML = '';
             }
         }
 
         // Modal close on click outside
         window.onclick = function(event) {
-            let modal = document.getElementById('calendar-modal');
-            if (event.target == modal) {
-                modal.classList.remove('active');
+            let calModal = document.getElementById('calendar-modal');
+            if (event.target == calModal) {
+                calModal.classList.remove('active');
+            }
+            
+            let vidModal = document.getElementById('video-modal');
+            if (event.target == vidModal) {
+                closeVideoModal();
             }
         }
     </script>
