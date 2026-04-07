@@ -112,6 +112,14 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .cinematic-glow {
+            text-shadow: 0 0 20px rgba(255, 188, 0, 0.3);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(255, 188, 0, 0.05) 50%);
+            background-size: 100% 4px;
+        }
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
@@ -139,12 +147,12 @@
 <section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black" id="hero-section">
 <div class="hero-video-container" id="video-container">
 <video autoplay="" id="bg-video" loop="" muted="" playsinline="">
-<source src="flicker.mp4" type="video/mp4"/>
+<source src="FLICKER.mp4" type="video/mp4"/>
 </video>
 </div>
 <!-- Transparent Overlay and Button -->
 <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/20" id="hero-overlay">
-<button class="font-headline text-white font-bold text-[48px] uppercase tracking-tighter hover:scale-105 transition-transform duration-500" onclick="enterExperience()">
+<button class="font-headline text-white font-bold text-4xl uppercase tracking-tighter hover:scale-105 transition-transform duration-500" onclick="enterExperience()">
             PRESS TO ENTER
         </button>
 </div>
@@ -171,24 +179,52 @@
 </div>
 </div>
 </section>
-<!-- SECTION 3: CONTACT -->
-<section class="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-surface" id="contact">
+<!-- SECTION 3: CONTACT (Redesigned) -->
+<section class="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-surface" id="contact">
 <div class="absolute inset-0 z-0">
-<div class="absolute inset-0 bg-black/90 z-10"></div>
-<img class="w-full h-full object-cover opacity-20" data-alt="Futuristic glowing terminal interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1__io07KvyDOb7xGlSvCYU9tiC6dDrDLpA9OH-0ugw6r0AgdYCM3OVxJ-FrnAaPKUQizhPJf2UNse2AyjH2c4iq9zRu5QUtGvqdJsf6jbe4x3jI8URIr27CrB_7WzJZbVC2FkrlEbRRqoySwIx5BXy8i57YbzRA5lpV82Mr_KwqEy0Slj_g3l5RFGwC5_LIad0Q3PfOmuTtwOfEaU0SUW6hxMBv8UwKpXn5Xs5ckd6cTTbsw_DapSDiBiChuaW4im-PQYTfvPJCE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black z-10"></div>
+<img class="w-full h-full object-cover opacity-10" data-alt="Futuristic glowing terminal interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1__io07KvyDOb7xGlSvCYU9tiC6dDrDLpA9OH-0ugw6r0AgdYCM3OVxJ-FrnAaPKUQizhPJf2UNse2AyjH2c4iq9zRu5QUtGvqdJsf6jbe4x3jI8URIr27CrB_7WzJZbVC2FkrlEbRRqoySwIx5BXy8i57YbzRA5lpV82Mr_KwqEy0Slj_g3l5RFGwC5_LIad0Q3PfOmuTtwOfEaU0SUW6hxMBv8UwKpXn5Xs5ckd6cTTbsw_DapSDiBiChuaW4im-PQYTfvPJCE"/>
+<div class="absolute inset-0 scanline opacity-20 pointer-events-none"></div>
 </div>
-<div class="relative z-20 w-full max-w-4xl px-8 text-center flex flex-col items-center">
-<h2 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter text-on-surface mb-8">GET IN <span class="text-primary-container italic">TOUCH</span></h2>
-<div class="flex flex-col items-center gap-4 mb-12">
-<a class="font-headline text-2xl md:text-4xl text-primary hover:text-primary-container transition-colors tracking-tight" href="mailto:hello@simonkoecher.com">hello@simonkoecher.com</a>
-<p class="font-headline text-xl md:text-2xl text-on-surface-variant tracking-tight">+46 70 921 4543</p>
+<div class="relative z-20 w-full max-w-6xl px-8 flex flex-col items-center">
+<!-- Main Heading -->
+<div class="mb-16 text-center">
+<span class="font-label text-primary tracking-[0.6em] text-[10px] uppercase mb-4 block opacity-60">System Protocol: Communication</span>
+<h2 class="font-headline text-7xl md:text-[120px] font-bold tracking-tighter text-on-surface leading-[0.8] cinematic-glow">
+                LET’S <span class="text-primary-container">TALK</span>
+</h2>
 </div>
-<button class="group relative px-10 py-5 border border-primary/30 hover:border-primary-container transition-all duration-300" onclick="document.getElementById('calendar-modal').classList.add('active')">
-<span class="relative z-10 font-label text-primary-container tracking-[0.4em] text-sm uppercase">Book a Meeting</span>
+<!-- Contact Links -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-3xl border-t border-b border-white/10 py-12 mb-16 relative">
+<!-- Email -->
+<div class="flex flex-col items-center md:items-start group">
+<span class="font-label text-[10px] text-outline-variant uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Direct Channel</span>
+<a class="font-headline text-2xl md:text-3xl text-on-surface hover:text-primary transition-all duration-300 tracking-tight" href="mailto:hello@simonkoecher.com">
+                    hello@simonkoecher.com
+                </a>
+</div>
+<!-- Phone -->
+<div class="flex flex-col items-center md:items-end group">
+<span class="font-label text-[10px] text-outline-variant uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Secure Line</span>
+<p class="font-headline text-2xl md:text-3xl text-on-surface-variant tracking-tight tabular-nums">
+                    +46 70 921 4543
+                </p>
+</div>
+<!-- Accent Corner Brackets -->
+<div class="absolute -top-[1px] -left-[1px] w-4 h-4 border-t border-l border-primary/40"></div>
+<div class="absolute -top-[1px] -right-[1px] w-4 h-4 border-t border-r border-primary/40"></div>
+<div class="absolute -bottom-[1px] -left-[1px] w-4 h-4 border-b border-l border-primary/40"></div>
+<div class="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b border-r border-primary/40"></div>
+</div>
+<!-- Action Button -->
+<button class="group relative px-12 py-6 overflow-hidden transition-all duration-500 border border-primary/20 hover:border-primary" onclick="document.getElementById('calendar-modal').classList.add('active')">
 <div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
+<span class="relative z-10 font-label text-primary-container tracking-[0.4em] text-xs uppercase font-bold">Book a Meeting</span>
+<!-- Minimal Glow Accent -->
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-primary-container blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
 </button>
 </div>
-<!-- Booking Modal -->
+<!-- Booking Modal (Kept functionality) -->
 <div class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md" id="calendar-modal">
 <div class="relative bg-surface-container-low border border-outline-variant w-full max-w-2xl overflow-hidden rounded-xl shadow-2xl">
 <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container">
