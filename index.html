@@ -147,22 +147,20 @@
             transform: rotate(180deg);
         }
 
-        /* Custom Play Cursor */
+        /* Custom Play Cursor - Updated */
         #play-cursor {
             position: fixed;
             pointer-events: none;
             z-index: 100;
-            width: 80px;
-            height: 80px;
-            background: #ffbc00;
-            color: black;
-            border-radius: 50%;
+            background: transparent;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 10px;
-            letter-spacing: 0.1em;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 0.2em;
             transform: translate(-50%, -50%) scale(0);
             transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
@@ -181,7 +179,100 @@
             opacity: 1;
         }
     </style>
-<script src="https://player.vimeo.com/api/player.js"></script>
+<script src="https://player.vimeo.com/api/player.js">
+        let mainPlayer;
+        let modalPlayer;
+        const vimeoId = '721227434';
+
+        function enterExperience() {
+            const container = document.getElementById('video-container');
+            const overlay = document.getElementById('hero-overlay');
+            const replayOverlay = document.getElementById('replay-overlay');
+            
+            container.innerHTML = `<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" id="vimeo-player" src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&amp;byline=0&amp;title=0&amp;portrait=0"></iframe>`;
+            
+            overlay.classList.add('hidden');
+            replayOverlay.classList.add('hidden');
+
+            const iframe = document.getElementById('vimeo-player');
+            mainPlayer = new Vimeo.Player(iframe);
+
+            mainPlayer.on('ended', function() {
+                replayOverlay.classList.remove('hidden');
+                replayOverlay.classList.add('flex');
+            });
+        }
+
+        function replayExperience() {
+            const replayOverlay = document.getElementById('replay-overlay');
+            replayOverlay.classList.add('hidden');
+            replayOverlay.classList.remove('flex');
+            
+            if (mainPlayer) {
+                mainPlayer.setCurrentTime(0);
+                mainPlayer.play();
+            }
+        }
+
+        // Custom Cursor Logic
+        function updateCursor(e) {
+            const cursor = document.getElementById('play-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        }
+
+        // Video Modal Logic
+        function openVideoModal(id) {
+            const modal = document.getElementById('video-modal');
+            const container = document.getElementById('modal-player-container');
+            
+            container.innerHTML = `<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="100%" id="modal-vimeo-iframe" src="https://player.vimeo.com/video/${id}?autoplay=1" width="100%"></iframe>`;
+            
+            modal.classList.add('active');
+            modal.style.display = 'flex';
+            
+            const iframe = document.getElementById('modal-vimeo-iframe');
+            modalPlayer = new Vimeo.Player(iframe);
+
+            // Automatically close modal when video ends
+            modalPlayer.on('ended', function() {
+                closeVideoModal();
+            });
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const container = document.getElementById('modal-player-container');
+            
+            if (modalPlayer) {
+                modalPlayer.pause().then(() => {
+                    modal.classList.remove('active');
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        container.innerHTML = '';
+                        modalPlayer = null;
+                    }, 400);
+                });
+            } else {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                container.innerHTML = '';
+            }
+        }
+
+        // Modal close on click outside
+        window.onclick = function(event) {
+            let calModal = document.getElementById('calendar-modal');
+            if (event.target == calModal) {
+                calModal.classList.remove('active');
+            }
+            
+            let vidModal = document.getElementById('video-modal');
+            if (event.target == vidModal) {
+                closeVideoModal();
+            }
+        }
+    </script>
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 <!-- Top Navigation Shell -->
@@ -326,7 +417,7 @@
 </div>
 <!-- Video Modal for Works -->
 <div class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 backdrop-blur-xl" id="video-modal">
-<div class="relative w-[90vw] h-[90vh] bg-black shadow-2xl flex items-center justify-center">
+<div class="relative w-[80vw] h-[80vh] bg-black shadow-2xl flex items-center justify-center">
 <button class="absolute -top-12 right-0 text-white hover:text-[#ffbc00] transition-colors flex items-center gap-2 font-headline uppercase tracking-widest text-xs" onclick="closeVideoModal()">
                     Close <span class="material-symbols-outlined text-2xl">close</span>
 </button>
@@ -444,7 +535,7 @@
             const overlay = document.getElementById('hero-overlay');
             const replayOverlay = document.getElementById('replay-overlay');
             
-            container.innerHTML = `<iframe id="vimeo-player" src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&byline=0&title=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+            container.innerHTML = `<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" id="vimeo-player" src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&amp;byline=0&amp;title=0&amp;portrait=0"></iframe>`;
             
             overlay.classList.add('hidden');
             replayOverlay.classList.add('hidden');
@@ -481,13 +572,18 @@
             const modal = document.getElementById('video-modal');
             const container = document.getElementById('modal-player-container');
             
-            container.innerHTML = `<iframe src="https://player.vimeo.com/video/${id}?autoplay=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+            container.innerHTML = `<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="100%" id="modal-vimeo-iframe" src="https://player.vimeo.com/video/${id}?autoplay=1" width="100%"></iframe>`;
             
             modal.classList.add('active');
             modal.style.display = 'flex';
             
-            const iframe = container.querySelector('iframe');
+            const iframe = document.getElementById('modal-vimeo-iframe');
             modalPlayer = new Vimeo.Player(iframe);
+
+            // Automatically close modal when video ends
+            modalPlayer.on('ended', function() {
+                closeVideoModal();
+            });
         }
 
         function closeVideoModal() {
@@ -500,6 +596,7 @@
                     setTimeout(() => {
                         modal.style.display = 'none';
                         container.innerHTML = '';
+                        modalPlayer = null;
                     }, 400);
                 });
             } else {
