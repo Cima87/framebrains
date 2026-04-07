@@ -5,7 +5,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Simon Köcher | An Application</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800;900&amp;family=Pirata+One&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
       tailwind.config = {
@@ -71,7 +72,7 @@
                     "headline": ["Montserrat", "sans-serif"],
                     "body": ["Montserrat", "sans-serif"],
                     "label": ["Montserrat", "sans-serif"],
-                    "pirata": ["Pirata One", "serif"]
+                    "pirata": ["Pirata One", "system-ui"]
             }
           },
         },
@@ -90,13 +91,14 @@
             overflow-y: scroll; 
             scroll-behavior: smooth; 
             font-family: 'Montserrat', sans-serif;
+            background-color: #131313;
         }
         
         body.scroll-lock {
             overflow: hidden !important;
         }
 
-        section { scroll-snap-align: start; }
+        section { scroll-snap-align: start; min-height: 100vh; position: relative; }
         .glass-card { backdrop-filter: blur(24px); background: rgba(53, 53, 52, 0.4); }
         .diagonal-menu { display: none; }
         .menu-open .diagonal-menu { display: flex; }
@@ -136,10 +138,14 @@
         .accordion-slice {
             transition: width 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: none;
+            width: 100%;
         }
-        .accordion-slice:hover {
-            width: 70%;
+        
+        @media (min-width: 768px) {
+            .accordion-slice { width: 25%; }
+            .accordion-slice:hover { width: 70%; }
         }
+
         .accordion-slice iframe, .accordion-slice .video-preview {
             transition: filter 0.7s ease, opacity 0.7s ease;
             filter: grayscale(100%) brightness(30%);
@@ -169,9 +175,11 @@
             transform: translate(-50%, -50%) scale(0);
             transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .accordion-slice:hover ~ #play-cursor,
-        #other-works:hover #play-cursor {
-            transform: translate(-50%, -50%) scale(1);
+        @media (hover: hover) {
+            .accordion-slice:hover ~ #play-cursor,
+            #other-works:hover #play-cursor {
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
 
         #video-modal {
@@ -200,13 +208,13 @@
 </head>
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container scroll-lock">
 <!-- Top Navigation -->
-<nav class="fixed top-0 w-full z-50 bg-neutral-950/40 shadow-2xl shadow-black/50 flex items-center px-8 h-20">
+<nav class="fixed top-0 w-full z-50 bg-neutral-950/40 shadow-2xl shadow-black/50 flex items-center px-4 md:px-8 h-20 opacity-0 pointer-events-none transition-opacity duration-700" id="main-nav">
 <div class="flex-none">
 <button class="text-[#ffbc00] p-2 hover:bg-white/5 transition-all duration-500 cursor-pointer active:scale-95 ease-in-out" onclick="document.body.classList.toggle('menu-open')">
 <span class="material-symbols-outlined">add</span>
 </button>
 </div>
-<div class="grow text-center text-4xl font-normal tracking-wide text-[#ffbc00] font-pirata cursor-pointer active:scale-95 ease-in-out">
+<div class="grow text-center text-xl md:text-4xl font-black tracking-tighter text-[#ffbc00] font-headline cursor-pointer active:scale-95 ease-in-out">
         Simon Köcher - An Application
     </div>
 <div class="flex-none w-10"></div>
@@ -221,41 +229,41 @@
 <a class="font-headline text-4xl md:text-8xl font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-tighter" href="#contact" onclick="document.body.classList.remove('menu-open')">Contact</a>
 </div>
 <!-- SECTION 1: LANDING HERO -->
-<section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black pt-20" id="hero-section">
-<div class="hero-video-container" id="video-container" style="top: 5rem; height: calc(100% - 5rem);">
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black" id="hero-section">
+<div class="hero-video-container" id="video-container">
 <video autoplay="" id="bg-video-hero" loop="" muted="" playsinline="">
 <source src="https://player.vimeo.com/external/517090081.sd.mp4?s=d03e5c9a173d3288b85750ee0b91e9882f0c7661&amp;profile_id=164&amp;oauth2_token_id=57447761" type="video/mp4"/>
 </video>
 </div>
-<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/20" id="hero-overlay" style="top: 5rem; height: calc(100% - 5rem);">
-<button class="font-pirata text-white font-normal text-6xl md:text-8xl uppercase tracking-wider hover:scale-105 transition-transform duration-500" onclick="enterExperience()">
+<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/20 px-4 text-center" id="hero-overlay">
+<button class="font-pirata text-white font-normal text-5xl md:text-8xl uppercase tracking-tighter hover:scale-105 transition-transform duration-500 cinematic-glow" onclick="enterExperience()">
             PRESS TO ENTER
         </button>
 </div>
-<div class="absolute inset-0 z-30 hidden items-center justify-center bg-black" id="replay-overlay" style="top: 5rem; height: calc(100% - 5rem);">
-<button class="font-pirata text-white font-normal text-6xl md:text-8xl uppercase tracking-wider hover:scale-105 transition-transform duration-500 flex items-center gap-4" onclick="replayExperience()">
-<span class="material-symbols-outlined text-7xl">replay</span>
+<div class="absolute inset-0 z-30 hidden items-center justify-center bg-black px-4 text-center" id="replay-overlay">
+<button class="font-headline text-white font-black text-5xl md:text-8xl uppercase tracking-tighter hover:scale-105 transition-transform duration-500 flex items-center gap-4" onclick="replayExperience()">
+<span class="material-symbols-outlined text-5xl md:text-7xl">replay</span>
             REPLAY
         </button>
 </div>
-<div class="absolute bottom-10 left-10 flex flex-col gap-1 z-20">
+<div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 flex flex-col gap-1 z-20">
 <p class="font-label text-[10px] text-outline-variant uppercase font-medium">Lat: 34.0522 N</p>
 <p class="font-label text-[10px] text-outline-variant uppercase font-medium">Long: 118.2437 W</p>
 </div>
 </section>
 <!-- SECTION 2: VISION PAGE -->
-<section class="relative h-screen w-full flex flex-col md:flex-row bg-surface overflow-hidden" id="vision">
-<div class="w-full md:w-1/2 h-1/2 md:h-full bg-surface-container-lowest relative group">
-<img alt="Vision" class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmVE31EIaFygSsh8Owy3RG1AK2JTUtnNHQuvLaSU_JnN1mfIw5vxzv4QeBGB5o8hMI-Pdy3DU_ZsisI4oMzvrS9DQw5iiGkCznsn65DSx1XFfHUM8kno6DZd01NOBpn5Dbn2MbKjF6kF3npalRTv2JMQMh6N6JDsMVa7vqcU0ft2lgTEupJFuPGUGj195Lat7_0E2g8fR7vh-iJ9RinWaUy7YlUCE-Lp8CDXwiJ5Tznd9AULUGiSMW1Li0_oSdsPgWWjFV6_ywIHw"/>
+<section class="relative min-h-screen w-full flex flex-col md:flex-row bg-surface overflow-hidden" id="vision">
+<div class="w-full md:w-1/2 h-[50vh] md:h-full bg-surface-container-lowest relative group">
+<img alt="Vision" class="w-full h-full object-cover opacity-40 grayscale md:group-hover:grayscale-0 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmVE31EIaFygSsh8Owy3RG1AK2JTUtnNHQuvLaSU_JnN1mfIw5vxzv4QeBGB5o8hMI-Pdy3DU_ZsisI4oMzvrS9DQw5iiGkCznsn65DSx1XFfHUM8kno6DZd01NOBpn5Dbn2MbKjF6kF3npalRTv2JMQMh6N6JDsMVa7vqcU0ft2lgTEupJFuPGUGj195Lat7_0E2g8fR7vh-iJ9RinWaUy7YlUCE-Lp8CDXwiJ5Tznd9AULUGiSMW1Li0_oSdsPgWWjFV6_ywIHw"/>
 <div class="absolute inset-0 flex items-center justify-center">
-<button class="w-20 h-20 rounded-full border border-primary-container/30 flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-all duration-500">
-<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<button class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-primary-container/30 flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-all duration-500" onclick="enterExperience()">
+<span class="material-symbols-outlined text-3xl md:text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
 </button>
 </div>
 </div>
-<div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center px-12 md:px-24 bg-surface">
-<div class="border-l-4 border-primary-container pl-8 py-4">
-<h2 class="font-headline text-5xl md:text-8xl font-black tracking-tighter uppercase mb-6 leading-[0.9]">
+<div class="w-full md:w-1/2 h-[50vh] md:h-full flex flex-col justify-center px-8 md:px-24 bg-surface">
+<div class="border-l-4 border-primary-container pl-6 md:pl-8 py-4">
+<h2 class="font-headline text-4xl md:text-8xl font-black tracking-tighter uppercase mb-6 leading-[0.9]">
                 my application <span class="text-primary-container">video</span>
 </h2>
 </div>
@@ -263,69 +271,69 @@
 </section>
 <!-- SECTION 3: OTHER WORKS -->
 <section class="relative h-screen w-full bg-black overflow-hidden" id="other-works" onmousemove="updateCursor(event)">
-<div class="absolute top-24 left-12 z-40 pointer-events-none">
-<h2 class="font-headline font-bold text-4xl md:text-7xl tracking-tighter uppercase opacity-90 cinematic-glow">
+<div class="absolute top-16 md:top-24 left-6 md:left-12 z-40 pointer-events-none">
+<h2 class="font-headline font-bold text-3xl md:text-7xl tracking-tighter uppercase opacity-90 cinematic-glow">
 <span class="text-white">Other</span> <span class="text-[#ffbc00]">Works</span>
 </h2>
 </div>
 <div id="play-cursor">PLAY</div>
-<div class="flex w-full h-full">
+<div class="flex flex-col md:flex-row w-full h-full">
 <!-- Slice 1 -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5" onclick="openVideoModal('1113549824')">
+<div class="accordion-slice relative h-1/4 md:h-full overflow-hidden group border-b md:border-b-0 md:border-r border-white/5" onclick="openVideoModal('1113549824')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
 <iframe class="w-full h-full object-cover" frameborder="0" src="https://player.vimeo.com/video/1113549824?background=1"></iframe>
 </div>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
-<div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
-<h3 class="font-headline text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">ODDSET - JINX</h3>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 md:group-hover:opacity-40 transition-opacity"></div>
+<div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
+<h3 class="font-headline text-2xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">ODDSET - JINX</h3>
 </div>
-<div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+<div class="absolute inset-0 hidden md:flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
 <span class="vertical-text font-headline text-2xl md:text-4xl font-bold uppercase tracking-widest text-white/40">ODDSET - JINX</span>
 </div>
 </div>
 <!-- Slice 2 -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5" onclick="openVideoModal('875093743')">
+<div class="accordion-slice relative h-1/4 md:h-full overflow-hidden group border-b md:border-b-0 md:border-r border-white/5" onclick="openVideoModal('875093743')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
 <iframe class="w-full h-full object-cover" frameborder="0" src="https://player.vimeo.com/video/875093743?background=1"></iframe>
 </div>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
-<div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
-<h3 class="font-headline text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">UL - Film critic</h3>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 md:group-hover:opacity-40 transition-opacity"></div>
+<div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
+<h3 class="font-headline text-2xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">UL - Film critic</h3>
 </div>
-<div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+<div class="absolute inset-0 hidden md:flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
 <span class="vertical-text font-headline text-2xl md:text-4xl font-bold uppercase tracking-widest text-white/40">UL - Film critic</span>
 </div>
 </div>
 <!-- Slice 3 -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group border-r border-white/5" onclick="openVideoModal('1133765348')">
+<div class="accordion-slice relative h-1/4 md:h-full overflow-hidden group border-b md:border-b-0 md:border-r border-white/5" onclick="openVideoModal('1133765348')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
 <iframe class="w-full h-full object-cover" frameborder="0" src="https://player.vimeo.com/video/1133765348?background=1"></iframe>
 </div>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
-<div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
-<h3 class="font-headline text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">How I Became a Communist</h3>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 md:group-hover:opacity-40 transition-opacity"></div>
+<div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
+<h3 class="font-headline text-2xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">How I Became a Communist</h3>
 </div>
-<div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+<div class="absolute inset-0 hidden md:flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
 <span class="vertical-text font-headline text-2xl md:text-4xl font-bold uppercase tracking-widest text-white/40">How I Became a Communist</span>
 </div>
 </div>
 <!-- Slice 4 -->
-<div class="accordion-slice relative w-1/4 h-full overflow-hidden group" onclick="openVideoModal('576940667')">
+<div class="accordion-slice relative h-1/4 md:h-full overflow-hidden group" onclick="openVideoModal('576940667')">
 <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
 <iframe class="w-full h-full object-cover" frameborder="0" src="https://player.vimeo.com/video/576940667?background=1"></iframe>
 </div>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 group-hover:opacity-40 transition-opacity"></div>
-<div class="absolute inset-0 flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
-<h3 class="font-headline text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">Ericsson - Vision</h3>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 md:group-hover:opacity-40 transition-opacity"></div>
+<div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
+<h3 class="font-headline text-2xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white">Ericsson - Vision</h3>
 </div>
-<div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+<div class="absolute inset-0 hidden md:flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
 <span class="vertical-text font-headline text-2xl md:text-4xl font-bold uppercase tracking-widest text-white/40">Ericsson - Vision</span>
 </div>
 </div>
 </div>
 <!-- Video Modal -->
 <div class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 backdrop-blur-xl" id="video-modal">
-<div class="relative w-[80vw] h-[80vh] bg-black shadow-2xl flex items-center justify-center">
+<div class="relative w-[95vw] md:w-[80vw] h-[60vh] md:h-[80vh] bg-black shadow-2xl flex items-center justify-center">
 <button class="absolute -top-12 right-0 text-white hover:text-[#ffbc00] transition-colors flex items-center gap-2 font-headline uppercase tracking-widest text-lg" onclick="closeVideoModal()">
                 Close <span class="material-symbols-outlined text-3xl">close</span>
 </button>
@@ -334,94 +342,97 @@
 </div>
 </section>
 <!-- SECTION 4: CONTACT -->
-<section class="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-surface" id="contact">
+<section class="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-black" id="contact">
 <div class="absolute inset-0 z-0">
-<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black z-10"></div>
-<img alt="Contact Background" class="w-full h-full object-cover opacity-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaC3GbkdcWurfNxUf-mPpNpt99b0rDOlwIXe8rlTCFJvlVdCrYVQYJFY3frTppyetfVkhBPmUdv09oUCJwczX7I1H4CY8srjraMIblu6gqDdCc4IXzohoQ8srYrA8-bye8Z-79yGC4Bv5zz3Lkf-eJ23FkU-EuL68fQQyQt3gU1hu4jjoI6fwg2pGbGv0W89OGHcntWDMgEUfRudKsE6Bed8GRuREucxotcPX3Or1XKsrBTGnauhhAQ4ZNZqHxbcRnlZh2uK67RPg"/>
-<div class="absolute inset-0 scanline opacity-20 pointer-events-none"></div>
+<div class="absolute inset-0 bg-black/70 z-10"></div>
+<video autoplay="" class="w-full h-full object-cover opacity-30" loop="" muted="" playsinline="">
+<source src="https://simonkoecher.github.io/infinity.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 scanline opacity-20 pointer-events-none z-20"></div>
 </div>
-<div class="relative z-20 w-full max-w-6xl px-8 flex flex-col items-center">
-<div class="mb-16 text-center">
-<h2 class="font-headline text-7xl md:text-[140px] font-black tracking-tighter text-on-surface leading-[0.7] cinematic-glow">
+<div class="relative z-20 w-full max-w-6xl px-4 md:px-8 flex flex-col items-center">
+<div class="mb-12 md:mb-16 text-center">
+<h2 class="font-headline text-5xl md:text-[140px] font-black tracking-tighter text-on-surface leading-[0.7] cinematic-glow">
                 LET'S <span class="text-primary-container">TALK</span>
 </h2>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-3xl border-t border-b border-white/10 py-12 mb-16 relative">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full max-w-4xl border-t border-b border-white/10 py-10 md:py-12 mb-12 md:mb-16 relative">
 <div class="flex flex-col items-center md:items-start group">
-<a class="font-headline text-2xl md:text-4xl font-bold text-on-surface hover:text-primary transition-all duration-300 tracking-tight" href="mailto:hello@simonkoecher.com">
+<p class="text-xs uppercase tracking-[0.2em] text-outline mb-2 opacity-50">Email</p>
+<a class="font-headline text-lg md:text-3xl font-bold text-on-surface hover:text-primary transition-all duration-300 tracking-tight break-all text-center md:text-left" href="mailto:hello@simonkoecher.com">
                     hello@simonkoecher.com
                 </a>
 </div>
 <div class="flex flex-col items-center md:items-end group">
-<p class="font-headline text-2xl md:text-4xl font-bold text-on-surface tracking-tight tabular-nums">
+<p class="text-xs uppercase tracking-[0.2em] text-outline mb-2 opacity-50">Phone</p>
+<p class="font-headline text-lg md:text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                     +46 70 921 4543
                 </p>
 </div>
+<!-- Decorative Corners -->
 <div class="absolute -top-[1px] -left-[1px] w-4 h-4 border-t border-l border-primary/40"></div>
 <div class="absolute -top-[1px] -right-[1px] w-4 h-4 border-t border-r border-primary/40"></div>
 <div class="absolute -bottom-[1px] -left-[1px] w-4 h-4 border-b border-l border-primary/40"></div>
 <div class="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b border-r border-primary/40"></div>
 </div>
-<button class="group relative px-16 py-8 overflow-hidden transition-all duration-500 border border-primary/20 hover:border-primary" onclick="document.getElementById('calendar-modal').classList.add('active')">
+<button class="group relative px-10 md:px-16 py-6 md:py-8 overflow-hidden transition-all duration-500 border border-primary/20 hover:border-primary w-full max-w-xs md:max-w-md" onclick="document.getElementById('calendar-modal').classList.add('active')">
 <div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
-<span class="relative z-10 font-headline text-primary-container tracking-[0.2em] text-xl uppercase font-bold">Book a Meeting</span>
+<span class="relative z-10 font-headline text-primary-container tracking-[0.2em] text-base md:text-xl uppercase font-bold">Book a Meeting</span>
 <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-primary-container blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
 </button>
 </div>
 <!-- Booking Modal -->
 <div class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-xl" id="calendar-modal">
 <div class="relative bg-surface-container-low border border-outline-variant w-full max-w-xl overflow-hidden rounded-lg shadow-2xl">
-<div class="p-8 border-b border-outline-variant flex justify-between items-center bg-surface-container">
+<div class="p-6 md:p-8 border-b border-outline-variant flex justify-between items-center bg-surface-container">
 <div class="flex items-center gap-4">
 <button class="text-on-surface-variant hover:text-primary" onclick="changeMonth(-1)"><span class="material-symbols-outlined">chevron_left</span></button>
-<h3 class="font-headline text-2xl font-bold text-primary uppercase tracking-widest" id="current-month-display">January 2026</h3>
+<h3 class="font-headline text-xl md:text-2xl font-bold text-primary uppercase tracking-widest" id="current-month-display">January 2026</h3>
 <button class="text-on-surface-variant hover:text-primary" onclick="changeMonth(1)"><span class="material-symbols-outlined">chevron_right</span></button>
 </div>
 <button class="text-on-surface-variant hover:text-primary transition-transform hover:rotate-90" onclick="closeCalendarModal()">
 <span class="material-symbols-outlined text-3xl">close</span>
 </button>
 </div>
-<div class="p-8">
-<div class="grid grid-cols-7 gap-3 text-center mb-6">
-<div class="font-label text-[10px] text-outline uppercase font-bold">Mon</div>
-<div class="font-label text-[10px] text-outline uppercase font-bold">Tue</div>
-<div class="font-label text-[10px] text-outline uppercase font-bold">Wed</div>
-<div class="font-label text-[10px] text-outline uppercase font-bold">Thu</div>
-<div class="font-label text-[10px] text-outline uppercase font-bold">Fri</div>
-<div class="font-label text-[10px] text-outline-variant uppercase font-bold">Sat</div>
-<div class="font-label text-[10px] text-outline-variant uppercase font-bold">Sun</div>
+<div class="p-4 md:p-8">
+<div class="grid grid-cols-7 gap-1 md:gap-3 text-center mb-6">
+<div class="font-label text-[8px] md:text-[10px] text-outline uppercase font-bold">Mon</div>
+<div class="font-label text-[8px] md:text-[10px] text-outline uppercase font-bold">Tue</div>
+<div class="font-label text-[8px] md:text-[10px] text-outline uppercase font-bold">Wed</div>
+<div class="font-label text-[8px] md:text-[10px] text-outline uppercase font-bold">Thu</div>
+<div class="font-label text-[8px] md:text-[10px] text-outline uppercase font-bold">Fri</div>
+<div class="font-label text-[8px] md:text-[10px] text-outline-variant uppercase font-bold">Sat</div>
+<div class="font-label text-[8px] md:text-[10px] text-outline-variant uppercase font-bold">Sun</div>
 <!-- Calendar Days JS injection point -->
 <div class="contents" id="calendar-days-grid"></div>
 </div>
-<div class="space-y-6 pt-4 border-t border-outline-variant/30 opacity-0 transition-opacity duration-300" id="time-slots-container">
-<p class="font-headline text-lg text-primary uppercase tracking-widest text-center">Select Time Slot (CET)</p>
-<div class="grid grid-cols-3 gap-4">
-<button class="time-slot py-4 border border-outline-variant text-xl font-headline font-bold hover:bg-primary/10 transition-all rounded" onclick="selectTime('09:00', this)">09:00</button>
-<button class="time-slot py-4 border border-outline-variant text-xl font-headline font-bold hover:bg-primary/10 transition-all rounded" onclick="selectTime('13:30', this)">13:30</button>
-<button class="time-slot py-4 border border-outline-variant text-xl font-headline font-bold hover:bg-primary/10 transition-all rounded" onclick="selectTime('15:00', this)">15:00</button>
+<div class="space-y-4 md:space-y-6 pt-4 border-t border-outline-variant/30 opacity-0 transition-opacity duration-300" id="time-slots-container">
+<p class="font-headline text-base md:text-lg text-primary uppercase tracking-widest text-center">Select Time Slot (CET)</p>
+<div class="grid grid-cols-3 gap-2 md:gap-4">
+<button class="time-slot py-3 md:py-4 border border-outline-variant text-base md:text-xl font-headline font-bold hover:bg-primary/10 transition-all rounded" onclick="selectTime('09:00', this)">09:00</button>
+<button class="time-slot py-3 md:py-4 border border-outline-variant text-base md:text-xl font-headline font-bold hover:bg-primary/10 transition-all rounded" onclick="selectTime('13:30', this)">13:30</button>
+<button class="time-slot py-3 md:py-4 border border-outline-variant text-base md:text-xl font-headline font-bold hover:bg-primary/10 transition-all rounded" onclick="selectTime('15:00', this)">15:00</button>
 </div>
 </div>
 </div>
-<div class="p-8 bg-surface-container-highest/30 flex justify-center">
-<button class="w-full px-12 py-5 bg-primary text-on-primary font-headline text-xl uppercase tracking-widest font-black disabled:opacity-30 disabled:grayscale transition-all" disabled="" id="confirm-btn" onclick="handleConfirmation()">Confirm Selection</button>
+<div class="p-6 md:p-8 bg-surface-container-highest/30 flex justify-center">
+<button class="w-full px-8 py-4 md:py-5 bg-primary text-on-primary font-headline text-lg md:text-xl uppercase tracking-widest font-black disabled:opacity-30 disabled:grayscale transition-all" disabled="" id="confirm-btn" onclick="handleConfirmation()">Confirm Selection</button>
 </div>
 </div>
 </div>
 </section>
 <!-- Footer -->
-<footer class="bg-[#0e0e0e] w-full py-16 px-8 border-t border-white/5">
+<footer class="bg-[#0e0e0e] w-full py-12 md:py-16 px-8 border-t border-white/5">
 <div class="flex flex-col md:flex-row justify-center items-center w-full max-w-7xl mx-auto">
-<div class="font-headline text-sm font-semibold uppercase tracking-[0.4em] text-neutral-500">
+<div class="font-headline text-xs md:text-sm font-semibold uppercase tracking-[0.2em] md:tracking-[0.4em] text-neutral-500 text-center">
             © 2026 SIMON KÖCHER. ACCESS GRANTED.
         </div>
 </div>
 </footer>
 <script>
-    // Scroll lock logic
+    // Initial state
     window.addEventListener('load', () => {
-        setTimeout(() => {
-            document.body.classList.remove('scroll-lock');
-        }, 8000);
+        document.body.classList.add('scroll-lock');
         renderCalendar();
     });
 
@@ -439,6 +450,8 @@
     function renderCalendar() {
         const grid = document.getElementById('calendar-days-grid');
         const monthDisplay = document.getElementById('current-month-display');
+        if (!grid || !monthDisplay) return;
+        
         grid.innerHTML = '';
         
         const year = currentDate.getFullYear();
@@ -458,7 +471,7 @@
 
         for (let day = 1; day <= daysInMonth; day++) {
             const btn = document.createElement('button');
-            btn.className = "aspect-square flex items-center justify-center border border-outline-variant/10 text-lg font-headline font-bold hover:bg-primary/20 transition-colors";
+            btn.className = "aspect-square flex items-center justify-center border border-outline-variant/10 text-sm md:text-lg font-headline font-bold hover:bg-primary/20 transition-colors";
             btn.innerText = day;
             
             const dayOfWeek = new Date(year, month, day).getDay();
@@ -535,11 +548,17 @@
         const container = document.getElementById('video-container');
         const overlay = document.getElementById('hero-overlay');
         const replayOverlay = document.getElementById('replay-overlay');
+        const nav = document.getElementById('main-nav');
         
         container.innerHTML = `<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" id="vimeo-player" src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&amp;byline=0&amp;title=0&amp;portrait=0"></iframe>`;
         
         overlay.classList.add('hidden');
         replayOverlay.classList.add('hidden');
+
+        nav.classList.remove('opacity-0', 'pointer-events-none');
+        nav.classList.add('opacity-100');
+
+        document.body.classList.remove('scroll-lock');
 
         const iframe = document.getElementById('vimeo-player');
         mainPlayer = new Vimeo.Player(iframe);
@@ -562,6 +581,7 @@
     }
 
     function updateCursor(e) {
+        if (window.innerWidth < 768) return;
         const cursor = document.getElementById('play-cursor');
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
