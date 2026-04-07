@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Simon Köcher | An Application</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=Space+Grotesk:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
       tailwind.config = {
@@ -68,9 +68,9 @@
                     "full": "0.75rem"
             },
             "fontFamily": {
-                    "headline": ["Space Grotesk"],
-                    "body": ["Inter"],
-                    "label": ["Space Grotesk"]
+                    "headline": ["Montserrat"],
+                    "body": ["Montserrat"],
+                    "label": ["Montserrat"]
             }
           },
         },
@@ -83,7 +83,12 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #0e0e0e; }
         ::-webkit-scrollbar-thumb { background: #ffbc00; }
-        body { scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth; }
+        body { 
+            scroll-snap-type: y mandatory; 
+            overflow-y: scroll; 
+            scroll-behavior: smooth; 
+            font-family: 'Montserrat', sans-serif;
+        }
         section { scroll-snap-align: start; }
         .glass-card { backdrop-filter: blur(24px); background: rgba(53, 53, 52, 0.4); }
         .diagonal-menu { display: none; }
@@ -130,7 +135,7 @@
 <span class="material-symbols-outlined">add</span>
 </button>
 </div>
-<div class="grow text-center text-xl font-bold tracking-tighter text-[#ffbc00] font-['Space_Grotesk'] cursor-pointer active:scale-95 ease-in-out">
+<div class="grow text-center text-xl font-bold tracking-tighter text-[#ffbc00] font-headline cursor-pointer active:scale-95 ease-in-out">
         Simon Köcher - An Application
     </div>
 <div class="flex-none w-10"></div>
@@ -179,7 +184,7 @@
 </div>
 </div>
 </section>
-<!-- SECTION 3: CONTACT (Redesigned) -->
+<!-- SECTION 3: CONTACT -->
 <section class="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-surface" id="contact">
 <div class="absolute inset-0 z-0">
 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black z-10"></div>
@@ -224,7 +229,7 @@
 <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-primary-container blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
 </button>
 </div>
-<!-- Booking Modal (Kept functionality) -->
+<!-- Booking Modal -->
 <div class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md" id="calendar-modal">
 <div class="relative bg-surface-container-low border border-outline-variant w-full max-w-2xl overflow-hidden rounded-xl shadow-2xl">
 <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container">
@@ -268,13 +273,13 @@
 <!-- Footer Shell -->
 <footer class="bg-[#0e0e0e] w-full py-12 px-8">
 <div class="flex flex-col md:flex-row justify-between items-center w-full max-w-7xl mx-auto gap-4">
-<div class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-neutral-500">
+<div class="font-headline text-[10px] uppercase tracking-widest text-neutral-500">
             © 2024 SIMON KÖCHER. ACCESS GRANTED.
         </div>
 <div class="flex gap-12">
-<a class="text-neutral-600 hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-['Space_Grotesk'] text-[10px] uppercase tracking-widest" href="#">TERMINAL</a>
-<a class="text-neutral-600 hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-['Space_Grotesk'] text-[10px] uppercase tracking-widest" href="#">SECURITY</a>
-<a class="text-[#ffbc00] hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-['Space_Grotesk'] text-[10px] uppercase tracking-widest" href="#">LOGOUT</a>
+<a class="text-neutral-600 hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-headline text-[10px] uppercase tracking-widest" href="#">TERMINAL</a>
+<a class="text-neutral-600 hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-headline text-[10px] uppercase tracking-widest" href="#">SECURITY</a>
+<a class="text-[#ffbc00] hover:text-[#ffdfa7] transition-colors hover:underline decoration-1 underline-offset-4 font-headline text-[10px] uppercase tracking-widest" href="#">LOGOUT</a>
 </div>
 <div class="flex gap-4">
 <div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center hover:bg-primary/10 transition-all cursor-pointer">
@@ -291,8 +296,10 @@
         const container = document.getElementById('video-container');
         const overlay = document.getElementById('hero-overlay');
         
-        // Remove background video and overlay button
-        container.innerHTML = `<iframe src="https://player.vimeo.com/video/1179874118?autoplay=1&background=1&loop=1&byline=0&title=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        // Updated Vimeo ID placeholder as requested
+        const vimeoId = '1179874118'; 
+        
+        container.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&background=1&loop=1&byline=0&title=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
         overlay.classList.add('hidden');
     }
 
