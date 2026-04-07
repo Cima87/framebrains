@@ -89,7 +89,6 @@
         .diagonal-menu { display: none; }
         .menu-open .diagonal-menu { display: flex; }
         
-        /* Modal Styles */
         #calendar-modal {
             display: none;
             opacity: 0;
@@ -98,6 +97,20 @@
         #calendar-modal.active {
             display: flex;
             opacity: 1;
+        }
+
+        .hero-video-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .hero-video-container video, 
+        .hero-video-container iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -112,36 +125,35 @@
 <div class="grow text-center text-xl font-bold tracking-tighter text-[#ffbc00] font-['Space_Grotesk'] cursor-pointer active:scale-95 ease-in-out">
         Simon Köcher - An Application
     </div>
-<div class="flex-none w-10"></div> <!-- Placeholder for centering balance -->
+<div class="flex-none w-10"></div>
 </nav>
 <!-- Dropdown Menu -->
 <div class="diagonal-menu fixed inset-0 z-[60] bg-surface/95 backdrop-blur-2xl flex-col items-center justify-center gap-8">
 <button class="absolute top-8 left-8 text-primary" onclick="document.body.classList.remove('menu-open')">
 <span class="material-symbols-outlined text-4xl">close</span>
 </button>
-<a class="font-headline text-4xl md:text-6xl font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-tighter" href="#vision" onclick="document.body.classList.remove('menu-open')">Reel</a>
+<a class="font-headline text-4xl md:text-6xl font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-tighter" href="#vision" onclick="document.body.classList.remove('menu-open')">Vision</a>
 <a class="font-headline text-4xl md:text-6xl font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-tighter" href="#contact" onclick="document.body.classList.remove('menu-open')">Contact</a>
 </div>
 <!-- SECTION 1: LANDING HERO -->
-<section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-surface-container-lowest">
-<div class="absolute inset-0 z-0">
-<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-surface-container-lowest/80 z-10"></div>
-<img class="w-full h-full object-cover opacity-60" data-alt="Cinematic wide shot of a dark high-tech research facility with glowing amber monitors and soft atmospheric haze in the air" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzvzeukfWt5v0X6FiCFjApNjZYXpaNuRUorqIFVJjKusz2sIbdirZSQf8dJ78zNchrKKMFbA6K3xx-RHQA-rzUasl4Q6Rz1XFWvq2JT01Xvklfyr5VDJlOlKgWtEPM2-GjKKI5DCOglNzIb0UwV-ca9u86GQwlZxaNqa5zq3pqPYS5kYocYxPQ88v5EV6_7O3st9kwOGt8tYMmmQTUbWvsicMOrXHCLvrJ0Mzp2nyvUHEH2KhfIHjEbJ-MRTfc4c9ht-Aj7qm7JCU"/>
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black" id="hero-section">
+<div class="hero-video-container" id="video-container">
+<video autoplay="" id="bg-video" loop="" muted="" playsinline="">
+<source src="flicker.mp4" type="video/mp4"/>
+</video>
 </div>
-<div class="relative z-20 text-center flex flex-col items-center">
-<div class="mt-12">
-<button class="group relative px-12 py-4 flex flex-col items-center gap-2">
-<span class="font-label text-primary text-xs tracking-widest uppercase transition-all group-hover:tracking-[0.6em]">Press to Enter</span>
-<div class="w-12 h-[1px] bg-primary-container transition-all group-hover:w-32"></div>
-</button>
+<!-- Transparent Overlay and Button -->
+<div class="absolute inset-0 z-20 flex items-center justify-center bg-black/20" id="hero-overlay">
+<button class="font-headline text-white font-bold text-[48px] uppercase tracking-tighter hover:scale-105 transition-transform duration-500" onclick="enterExperience()">
+            PRESS TO ENTER
+        </button>
 </div>
-</div>
-<div class="absolute bottom-10 left-10 flex flex-col gap-1">
+<div class="absolute bottom-10 left-10 flex flex-col gap-1 z-20">
 <p class="font-label text-[8px] text-outline-variant uppercase">Lat: 34.0522 N</p>
 <p class="font-label text-[8px] text-outline-variant uppercase">Long: 118.2437 W</p>
 </div>
 </section>
-<!-- SECTION 2: VISION PAGE (VIDEO) -->
+<!-- SECTION 2: VISION PAGE -->
 <section class="relative h-screen w-full flex flex-col md:flex-row bg-surface overflow-hidden" id="vision">
 <div class="w-full md:w-1/2 h-1/2 md:h-full bg-surface-container-lowest relative group">
 <img class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000" data-alt="Close-up of a high-end cinema camera lens reflecting golden sunset light in a dark studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2xjMTuDpD5QrQqIaOnrtzW9NiRMeXE6UHCIIFjQVA-BjOv5GFEqSoQqLVCm7vVfxxn8_P2D6BEEPn7jgIF3aJdyKYdTogxrsSwz0fUbsw632hF6d-eRu2dGufP5yw9HXPTvIrj0rvtJc96-1op1ruN4K2uv0jQXPm262n7SVhsBscxYkx6JOObxYQN4KZ2O0zbF-ZnXMPCNNfhztw7lKPm7u0zq-lwxuGPS5E8QErazqjarQVlbPPEn3hih2RNU7gMs9P3y5Yeps"/>
@@ -186,7 +198,6 @@
 </button>
 </div>
 <div class="p-6">
-<!-- Simple Calendar Grid View -->
 <div class="grid grid-cols-7 gap-2 text-center mb-4">
 <div class="font-label text-[10px] text-outline uppercase">Mon</div>
 <div class="font-label text-[10px] text-outline uppercase">Tue</div>
@@ -195,7 +206,6 @@
 <div class="font-label text-[10px] text-outline uppercase">Fri</div>
 <div class="font-label text-[10px] text-outline-variant uppercase">Sat</div>
 <div class="font-label text-[10px] text-outline-variant uppercase">Sun</div>
-<!-- Week Row -->
 <button class="aspect-square flex items-center justify-center border border-outline-variant/30 text-xs hover:bg-primary/10 transition-colors">12</button>
 <button class="aspect-square flex items-center justify-center border border-outline-variant/30 text-xs hover:bg-primary/10 transition-colors">13</button>
 <button class="aspect-square flex items-center justify-center border border-primary/50 bg-primary/5 text-xs text-primary font-bold">14</button>
@@ -241,7 +251,16 @@
 </div>
 </footer>
 <script>
-    // Simple modal close on click outside
+    function enterExperience() {
+        const container = document.getElementById('video-container');
+        const overlay = document.getElementById('hero-overlay');
+        
+        // Remove background video and overlay button
+        container.innerHTML = `<iframe src="https://player.vimeo.com/video/1179874118?autoplay=1&background=1&loop=1&byline=0&title=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        overlay.classList.add('hidden');
+    }
+
+    // Modal close on click outside
     window.onclick = function(event) {
         let modal = document.getElementById('calendar-modal');
         if (event.target == modal) {
