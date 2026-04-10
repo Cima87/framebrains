@@ -193,20 +193,20 @@
 <!-- Play Cursor -->
 <div id="play-cursor">PLAY</div>
 
-<!-- Top Navigation (Reverted to Montserrat/font-body) -->
+<!-- Top Navigation -->
 <nav class="fixed top-0 w-full z-[100] bg-black h-20 flex items-center px-4 md:px-8 opacity-0 pointer-events-none transition-opacity duration-700 border-b border-white/5" id="main-nav">
 <div class="flex-none">
 <button class="text-[#ffbc00] p-2 hover:bg-white/5 transition-all duration-500 cursor-pointer active:scale-95 ease-in-out" onclick="document.body.classList.toggle('menu-open')">
 <span class="material-symbols-outlined">add</span>
 </button>
 </div>
-<div class="grow text-center text-xl md:text-4xl font-black tracking-tighter text-[#ffbc00] font-body cursor-pointer active:scale-95 ease-in-out">
+<div class="grow text-center text-xl md:text-4xl font-black tracking-tighter text-[#ffbc00] font-headline cursor-pointer active:scale-95 ease-in-out">
         Simon Köcher - An Application
     </div>
 <div class="flex-none w-10"></div>
 </nav>
 
-<!-- Dropdown Menu (Reverted to Montserrat/font-body) -->
+<!-- Dropdown Menu -->
 <div class="diagonal-menu fixed inset-0 z-[110] bg-[#0e0e0e]/50 backdrop-blur-2xl flex-col items-center justify-center gap-8">
 <button class="absolute top-8 left-8 text-primary" onclick="document.body.classList.remove('menu-open')">
 <span class="material-symbols-outlined text-4xl">close</span>
@@ -225,7 +225,7 @@
 <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/20 px-4 text-center" id="hero-overlay">
 <button class="font-pirata text-white font-normal text-5xl md:text-8xl uppercase tracking-tighter hover:scale-105 transition-transform duration-500 cinematic-glow" onclick="enterExperience()">PRESS TO ENTER</button>
 </div>
-<!-- Replay Overlay (Reverted to Montserrat/font-body) -->
+<!-- Replay Overlay -->
 <div class="absolute inset-0 z-30 hidden items-center justify-center bg-black px-4 text-center" id="replay-overlay">
 <button class="font-body text-white font-black text-5xl md:text-8xl uppercase tracking-tighter hover:scale-105 transition-transform duration-500 flex items-center gap-4" onclick="replayExperience()">
 <span class="material-symbols-outlined text-5xl md:text-7xl">replay</span>
@@ -241,7 +241,6 @@
 </div>
 <div class="w-full md:w-1/2 h-full flex flex-col justify-center items-center md:items-start px-8 md:px-24 bg-surface">
 <div class="border-l-4 border-primary-container pl-6 md:pl-10 py-4 flex flex-col justify-center">
-<!-- Headline remains Grenze -->
 <h2 class="font-headline text-4xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
                 my <span class="text-primary-container">(first)</span><br/>application <span class="text-primary-container">video</span>
 </h2>
@@ -252,7 +251,6 @@
 <!-- SECTION 3: OTHER WORKS (Gallery) -->
 <section class="relative h-screen w-full bg-black overflow-hidden" id="other-works">
 <div class="absolute top-16 md:top-28 left-6 md:left-12 z-40 pointer-events-none">
-<!-- Headline remains Grenze -->
 <h2 class="font-headline font-bold text-3xl md:text-7xl tracking-tighter uppercase opacity-90 cinematic-glow">
 <span class="text-white">Other</span> <span class="text-[#ffbc00]">Works</span>
 </h2>
@@ -265,7 +263,6 @@
 </div>
 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 z-10 md:group-hover:opacity-40 transition-opacity"></div>
 <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-700 delay-100 z-20">
-<!-- Headline remains Grenze -->
 <h3 class="font-headline text-2xl md:text-5xl font-black uppercase tracking-tighter mb-4 text-white">ODDSET - JINX</h3>
 </div>
 <div class="absolute inset-0 hidden md:flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300 pointer-events-none z-20">
@@ -325,7 +322,6 @@
 </div>
 <div class="relative z-20 w-full max-w-6xl px-4 md:px-8 flex flex-col items-center">
 <div class="mb-12 md:mb-16 text-center">
-<!-- Headline remains Grenze -->
 <h2 class="font-headline text-5xl md:text-[140px] font-black tracking-tighter text-on-surface leading-[0.7] cinematic-glow">
                 LET'S <span class="text-primary-container">TALK</span>
 </h2>
@@ -368,7 +364,6 @@
 <!-- Footer -->
 <footer class="bg-[#0e0e0e] w-full py-12 md:py-16 px-8 border-t border-white/5">
 <div class="flex flex-col md:flex-row justify-center items-center w-full max-w-7xl mx-auto">
-<!-- Footer (Reverted to Montserrat/font-body & "Access Granted" removed) -->
 <div class="font-body text-xs md:text-sm font-semibold uppercase tracking-[0.2em] md:tracking-[0.4em] text-neutral-500 text-center">
             © 2026 SIMON KÖCHER.
         </div>
@@ -378,7 +373,7 @@
 <!-- Video Modal -->
 <div class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/95 backdrop-blur-xl" id="video-modal">
 <div class="relative w-[70vw] h-[70vh] bg-black shadow-2xl flex items-center justify-center">
-<!-- Modal Close Button (Reverted to Montserrat/font-body) -->
+<!-- Modal Close Button -->
 <button class="absolute -top-12 right-0 text-white hover:text-[#ffbc00] transition-colors flex items-center gap-2 font-body uppercase tracking-widest text-lg" onclick="closeVideoModal()">
             Close <span class="material-symbols-outlined text-3xl">close</span>
 </button>
